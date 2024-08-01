@@ -30,6 +30,13 @@ typedef struct {
 CircleData circles[MAX_CIRCLES];
 int num_circles = 0;
 
+// KD Tree structure and functions
+typedef struct KDNode {
+    CircleData* data;
+    struct KDNode* left;
+    struct KDNode* right;
+} KDNode;
+
 void update_physics(Circle* circle, float* vy, float* ay, float* vx, float* ax, SDL_Rect* box, float* totalV) {
     *totalV = sqrt((*vx) * (*vx) + (*vy) * (*vy));
 
@@ -152,6 +159,60 @@ void handle_collision_2Circles(Circle* circle, float* vx1, float* vy1, float* ax
     }
 }
 
+KDNode* createKDNode(CircleData* data) {
+    KDNode* node = (KDNode*)malloc(sizeof(KDNode));
+    node->data = data;
+    node->left = NULL;
+    node->right = NULL;
+    return node;
+}
+
+KDNode* insertKDNode(KDNode* root, CircleData* data, int depth) {
+    if (root == NULL) return createKDNode(data);
+
+    int cd = depth % 2; // 0 for x, 1 for y
+    if (cd == 0) {
+        if (data->circle->x < root->data->circle->x)
+            root->left = insertKDNode(root->left, data, depth + 1);
+        else
+            root->right = insertKDNode(root->right, data, depth + 1);
+    } else {
+        if (data->circle->y < root->data->circle->y)
+            root->left = insertKDNode(root->left, data, depth + 1);
+        else
+            root->right = insertKDNode(root->right, data, depth + 1);
+    }
+
+    return root;
+}
+
+void searchKDTree(KDNode* root, CircleData* target, int depth, float radius) {
+    if (root == NULL) return;
+
+    float dx = root->data->circle->x - target->circle->x;
+    float dy = root->data->circle->y - target->circle->y;
+    float distance = sqrt(dx * dx + dy * dy);
+
+    if (distance <= 2 * radius && root->data != target) {
+        handle_collision_2Circles(
+            root->data->circle, &root->data->vx, &root->data->vy, &root->data->ax, &root->data->ay, &root->data->totalV,
+            target->circle, &target->vx, &target->vy, &target->ax, &target->ay, &target->totalV);
+    }
+
+    int cd = depth % 2;
+    if (cd == 0) {
+        if (target->circle->x - radius < root->data->circle->x)
+            searchKDTree(root->left, target, depth + 1, radius);
+        if (target->circle->x + radius > root->data->circle->x)
+            searchKDTree(root->right, target, depth + 1, radius);
+    } else {
+        if (target->circle->y - radius < root->data->circle->y)
+            searchKDTree(root->left, target, depth + 1, radius);
+        if (target->circle->y + radius > root->data->circle->y)
+            searchKDTree(root->right, target, depth + 1, radius);
+    }
+}
+
 void add_circle(float x, float y, float radius, SDL_Color color, float mass) {
     if (num_circles >= MAX_CIRCLES) return;
     circles[num_circles].circle = create_circle(x, y, radius, color, mass);
@@ -228,17 +289,19 @@ int main() {
         printf("Mouse Position: (%d, %d)\n", x, y);
         fflush(stdout); // Flush the buffer to ensure immediate output
 
+        // Updates Physics for all circles
+        KDNode* kdRoot = NULL;
         for (int i = 0; i < num_circles; i++) {
             update_physics(circles[i].circle, &circles[i].vy, &circles[i].ay, &circles[i].vx, &circles[i].ax, &box, &circles[i].totalV);
-        }
+            kdRoot = insertKDNode(kdRoot, &circles[i], 0);
+       }
 
+        // Circle to circle collision (May need to look for a more efficent way)
         for (int i = 0; i < num_circles; i++) {
-            for (int j = i + 1; j < num_circles; j++) {
-                handle_collision_2Circles(circles[i].circle, &circles[i].vx, &circles[i].vy, &circles[i].ax, &circles[i].ay, &circles[i].totalV,
-                                          circles[j].circle, &circles[j].vx, &circles[j].vy, &circles[j].ax, &circles[j].ay, &circles[j].totalV);
-            }
+            searchKDTree(kdRoot, &circles[i], 0, circles[i].circle->radius);
         }
 
+        // Drawing the circle on the window
         for (int i = 0; i < num_circles; i++) {
             draw_circle(renderer, circles[i].circle);
         }
@@ -246,16 +309,8 @@ int main() {
         SDL_RenderPresent(renderer);
 
         while (SDL_PollEvent(&event)) {
-            switch (event.type) {
-                case SDL_QUIT:
-                    quit = 1;
-                    break;
-                case SDL_KEYDOWN:
-                    if (event.key.keysym.sym == SDLK_ESCAPE)
-                        quit = 1;
-                    break;
-                default:
-                    break;
+            if (event.type == SDL_QUIT || (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)) {
+                quit = 1;
             }
         }
         SDL_Delay(20); // Slow down the main loop for better visual effect
