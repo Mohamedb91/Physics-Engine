@@ -267,10 +267,10 @@ int main() {
     int yellow_count = 30;
 
     // Adding circles of different colour 
-    add_multiple_circles(red_count, 0, WINDOW_WIDTH, 0, WINDOW_HEIGHT, 25, red, 5);
+    add_multiple_circles(red_count, 0, WINDOW_WIDTH, 0, WINDOW_HEIGHT, 20, red, 5);
     add_multiple_circles(blue_count, 0, WINDOW_WIDTH, 0, WINDOW_HEIGHT, 25, blue, 5);
-    add_multiple_circles(green_count, 0, WINDOW_WIDTH, 0, WINDOW_HEIGHT, 25, green, 5);
-    add_multiple_circles(yellow_count, 0, WINDOW_WIDTH, 0, WINDOW_HEIGHT, 25, yellow, 5);
+    add_multiple_circles(green_count, 0, WINDOW_WIDTH, 0, WINDOW_HEIGHT, 15, green, 5);
+    add_multiple_circles(yellow_count, 0, WINDOW_WIDTH, 0, WINDOW_HEIGHT, 17.5, yellow, 5);
 
     // Cursor position (TEMP)
     int x, y;
