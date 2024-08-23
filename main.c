@@ -289,7 +289,7 @@ int main() {
         printf("Mouse Position: (%d, %d)\n", x, y);
         fflush(stdout); // Flush the buffer to ensure immediate output
 
-        // Updates Physics for all circles
+        // Updates Physics for all circles + Building the tree
         KDNode* kdRoot = NULL;
         for (int i = 0; i < num_circles; i++) {
             update_physics(circles[i].circle, &circles[i].vy, &circles[i].ay, &circles[i].vx, &circles[i].ax, &box, &circles[i].totalV);
