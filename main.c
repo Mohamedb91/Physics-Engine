@@ -5,7 +5,6 @@
 
 #undef main
 
-// Constants
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1150
 #define GRAVITY 0.6f
