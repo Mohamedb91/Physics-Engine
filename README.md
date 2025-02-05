@@ -29,7 +29,7 @@ cd Physics-Engine
 ```
 
 
-###🔹 2️⃣ Install SDL2
+### 🔹 2️⃣ Install SDL2
 📌 For Ubuntu/Debian:
 ```bash
 sudo apt-get update
@@ -43,14 +43,14 @@ brew install sdl2
 🔹 Download the SDL2 development libraries from the SDL2 website.
 🔹 Follow the installation instructions provided on the SDL website.
 ---
-###🔹 3️⃣ Compile the Program
+### 🔹 3️⃣ Compile the Program
 ```bash
 gcc -o physics_engine main.c Circle.c -lSDL2
 ```
 Ensure that the SDL2 library is correctly linked during compilation.
 
 ---
-###🔹 4️⃣ Run the Program
+### 🔹 4️⃣ Run the Program
 ```bash
 ./physics_engine
 ```
@@ -59,21 +59,21 @@ For Windows, run:
 physics_engine.exe
 ```
 ---
-##🎮 Usage
+## 🎮 Usage
 🔹 Upon running the program, a window will display the physics simulation.
 🔹 You can interact with the simulation based on the implemented controls.
 
 ---
 
-##🔥 Contributing
-🚀 Contributions are welcome!
-📌 If you want to contribute, please fork the repository and submit a pull request with your changes.
+## 🔥 Contributing
+- 🚀 Contributions are welcome!
+- 📌 If you want to contribute, please fork the repository and submit a pull request with your changes.
 
 ---
 
-##📜 License
-📌 This project is licensed under the MIT License.
-📜 See the LICENSE file for more details.
+## 📜 License
+- 📌 This project is licensed under the MIT License.
+- 📜 See the LICENSE file for more details.
 
 Happy Coding! 🚀
 
