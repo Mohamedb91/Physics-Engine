@@ -40,8 +40,8 @@ sudo apt-get install libsdl2-dev
 brew install sdl2
 ```
 📌 For Windows:
-🔹 Download the SDL2 development libraries from the SDL2 website.
-🔹 Follow the installation instructions provided on the SDL website.
+-🔹 Download the SDL2 development libraries from the SDL2 website.
+-🔹 Follow the installation instructions provided on the SDL website.
 ---
 ### 🔹 3️⃣ Compile the Program
 ```bash
@@ -60,8 +60,8 @@ physics_engine.exe
 ```
 ---
 ## 🎮 Usage
-🔹 Upon running the program, a window will display the physics simulation.
-🔹 You can interact with the simulation based on the implemented controls.
+-🔹 Upon running the program, a window will display the physics simulation.
+-🔹 You can interact with the simulation based on the implemented controls.
 
 ---
 
