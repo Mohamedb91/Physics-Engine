@@ -76,15 +76,3 @@ physics_engine.exe
 - 📜 See the LICENSE file for more details.
 
 Happy Coding! 🚀
-
-markdown
-Copy
-Edit
-
-This README file is now **structured with proper font sizes** using:
-- **Headings (`#` for different sizes)**
-- **Bold text (`**text**`)**
-- **Bullet points (`-` and `✅`)**
-- **Code blocks (` ```bash ... ``` `)**
-
-This ensures the README looks **clear, professional, and readable**! 🚀
